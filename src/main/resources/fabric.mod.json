@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "skintotem",
+	"version": "${version}",
+	"name": "Skin Totem",
+	"description": "Replaces the Totem of Undying texture with the skin of the player whose name is given to the item.",
+	"authors": [
+		"Spichka"
+	],
+	"contact": {
+		"homepage": "https://www.youtube.com/@Spichka_",
+		"sources": "https://github.com/Pawelgit1234/skintotem"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/skintotem/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"spichka.skintotem.SkinTotem"
+		],
+		"fabric-datagen": [
+			"spichka.skintotem.SkinTotemDataGenerator"
+		]
+	},
+	"mixins": [
+		"skintotem.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
