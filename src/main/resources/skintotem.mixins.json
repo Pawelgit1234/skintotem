@@ -3,7 +3,9 @@
 	"package": "spichka.skintotem.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"AnvilScreenHandlerMixin"
+		"AnvilScreenHandlerMixin",
+		"ItemRendererMixin",
+		"ItemRendererAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

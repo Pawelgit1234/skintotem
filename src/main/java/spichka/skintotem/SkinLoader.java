@@ -47,28 +47,12 @@ public class SkinLoader {
             File output = new File("config/skintotem/" + nickname + ".png");
             output.getParentFile().mkdirs();
             ImageIO.write(image, "PNG", output);
+            SkinTotem.LOGGER.info("Totem Image saved (config/skintotem/" + nickname + ".png)");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static NativeImage loadTotemImage(String texPath) {
-        try {
-            File file = new File("config/skintotem/" + texPath.substring(texPath.lastIndexOf("/") + 1) + ".png");
-            BufferedImage buffered = ImageIO.read(file);
-            NativeImage nativeImage = new NativeImage(buffered.getWidth(), buffered.getHeight(), true);
-            for (int x = 0; x < buffered.getWidth(); x++) {
-                for (int y = 0; y < buffered.getHeight(); y++) {
-                    nativeImage.setColor(x, y, buffered.getRGB(x, y));
-                }
-            }
-            return nativeImage;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    
     public static void loadSkin(String nickname) {
         // TODO: do not generate if skintottem already exists
         BufferedImage skin = getSkin(nickname);
