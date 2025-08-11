@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import spichka.skintotem.SimpleTextureLoader;
 import spichka.skintotem.SkinLoader;
 
 @Mixin(AnvilScreenHandler.class)
@@ -21,7 +20,6 @@ public abstract class AnvilScreenHandlerMixin {
             if (stack.getItem() == Items.TOTEM_OF_UNDYING &&
                 !stack.getName().getString().equals(stack.getItem().getName().getString())) {
                 SkinLoader.loadSkin(stack.getName().getString());
-                SimpleTextureLoader.loadTextures();
             }
         }
     }

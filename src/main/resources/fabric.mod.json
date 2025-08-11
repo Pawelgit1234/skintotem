@@ -20,6 +20,9 @@
 		],
 		"fabric-datagen": [
 			"spichka.skintotem.SkinTotemDataGenerator"
+		],
+		"client": [
+			"spichka.skintotem.SkinTotemClient"
 		]
 	},
 	"mixins": [

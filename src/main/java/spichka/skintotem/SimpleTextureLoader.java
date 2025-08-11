@@ -10,6 +10,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class SimpleTextureLoader {
@@ -17,13 +20,24 @@ public class SimpleTextureLoader {
 
     public static Identifier getTexture(String username) {
         Identifier texture = textures.get(username);
-        if (texture == null) {
-            // TODO: throw error in chat
-            SkinTotem.LOGGER.info("'"+ username + "' not found in cache");
-            return new Identifier("minecraft", "item/totem_of_undying");
-        }
         return texture;
     }
+
+    public static Identifier loadDynamicTexture(String username) {
+        Path file = Paths.get("config/skintotem/" + username + ".png");
+        Identifier id = new Identifier("skintotem", "dynamic/" + username);
+
+        try {
+            NativeImage img = NativeImage.read(Files.newInputStream(file));
+            NativeImageBackedTexture tex = new NativeImageBackedTexture(img);
+            MinecraftClient.getInstance().getTextureManager().registerTexture(id, tex);
+            return id;
+        } catch (IOException e) {
+            SkinTotem.LOGGER.error("Could not load texture for " + username, e);
+            return null;
+        }
+    }
+
 
     public static void loadTextures() {
         File folder = new File("config/skintotem/");
@@ -37,7 +51,7 @@ public class SimpleTextureLoader {
 
         for (File file : files) {
             String fileName = file.getName();
-            String username = fileName.substring(0, fileName.length() - 4); // deletes .png
+            String username = fileName.substring(0, fileName.length() - 4); // remove .png
 
             try {
                 BufferedImage bufferedImage = ImageIO.read(file);
@@ -50,11 +64,12 @@ public class SimpleTextureLoader {
                 textureManager.registerTexture(textureId, texture);
 
                 textures.put(username, textureId);
-                SkinTotem.LOGGER.info("Textures were cached");
+                SkinTotem.LOGGER.info("Rendering totem with custom texture: " + username + " -> " + textureId);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        SkinTotem.LOGGER.info("Textures were cached");
     }
 
     private static NativeImage fromBufferedImage(BufferedImage bufferedImage) {
